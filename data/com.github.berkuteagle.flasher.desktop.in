@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=flasher
+Exec=flasher
+Icon=com.github.berkuteagle.flasher
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

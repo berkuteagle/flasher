@@ -1,0 +1,6 @@
+data/com.github.berkuteagle.flasher.desktop.in
+data/com.github.berkuteagle.flasher.appdata.xml.in
+data/com.github.berkuteagle.flasher.gschema.xml
+src/main.c
+src/flasher-window.c
+src/flasher-window.ui
