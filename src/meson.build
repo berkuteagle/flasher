@@ -7,7 +7,7 @@ flasher_sources = [
 flasher_deps = [
   dependency('gtk4'),
   dependency('libadwaita-1'),
-  dependency('libpeas-gtk'),
+  dependency('libpeas-1.0'),
 ]
 
 flasher_sources += gnome.compile_resources('flasher-resources',
