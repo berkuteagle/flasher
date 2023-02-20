@@ -2,4 +2,11 @@
 <schemalist gettext-domain="flasher">
 	<schema id="com.github.berkuteagle.flasher" path="/com/github/berkuteagle/flasher/">
 	</schema>
+  <schema id="com.github.berkuteagle.flasher.plugins" path="/com/github/berkuteagle/flasher/plugins/">
+    <key name="active-plugins" type="as">
+      <default>[]</default>
+      <summary>Active plugins</summary>
+      <description>List of active plugins.</description>
+    </key>
+	</schema>
 </schemalist>

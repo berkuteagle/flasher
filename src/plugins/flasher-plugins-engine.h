@@ -25,12 +25,12 @@
 
 #pragma once
 
-#include <adwaita.h>
+#include <glib.h>
+#include <libpeas/peas.h>
 
-G_BEGIN_DECLS
+#define FLASHER_TYPE_PLUGINS_ENGINE (flasher_plugins_engine_get_type ())
+G_DECLARE_FINAL_TYPE(FlasherPluginsEngine, flasher_plugins_engine, FLASHER, PLUGINS_ENGINE, PeasEngine)
 
-#define FLASHER_TYPE_WINDOW (flasher_window_get_type())
+FlasherPluginsEngine    *flasher_plugins_engine_get_default   (void);
+void                    flasher_plugins_engine_shut_down      (FlasherPluginsEngine *self);
 
-G_DECLARE_FINAL_TYPE (FlasherWindow, flasher_window, FLASHER, WINDOW, AdwApplicationWindow)
-
-G_END_DECLS

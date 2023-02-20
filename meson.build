@@ -12,6 +12,8 @@ config_h = configuration_data()
 config_h.set_quoted('PACKAGE_VERSION', meson.project_version())
 config_h.set_quoted('GETTEXT_PACKAGE', 'flasher')
 config_h.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+config_h.set_quoted('LIBDIR', join_paths(get_option('prefix'), get_option('libdir')))
+config_h.set_quoted('DATADIR', join_paths(get_option('prefix'), get_option('datadir')))
 configure_file(output: 'config.h', configuration: config_h)
 add_project_arguments(['-I' + meson.project_build_root()], language: 'c')
 

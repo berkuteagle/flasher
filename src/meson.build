@@ -1,8 +1,11 @@
 flasher_sources = [
   'main.c',
   'flasher-application.c',
+  'flasher-application-activatable.c',
   'flasher-window.c',
 ]
+
+flasher_include = include_directories('.')
 
 flasher_deps = [
   dependency('gtk4'),
@@ -15,7 +18,10 @@ flasher_sources += gnome.compile_resources('flasher-resources',
   c_name: 'flasher'
 )
 
+subdir('plugins')
+
 executable('flasher', flasher_sources,
-  dependencies: flasher_deps,
-       install: true,
+  include_directories: flasher_include,
+         dependencies: flasher_deps,
+              install: true,
 )

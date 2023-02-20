@@ -1,6 +1,6 @@
 /* MIT License
  *
- * Copyright (c) 2023 Антон Снигирёв
+ * Copyright (c) 2023 Anton Snigirev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +26,23 @@
 #include "config.h"
 
 #include "flasher-application.h"
+#include "flasher-application-activatable.h"
 #include "flasher-window.h"
+#include "flasher-plugins-engine.h"
+
+typedef struct
+{
+  FlasherPluginsEngine *engine;
+
+  PeasExtensionSet *extensions;
+} FlasherApplicationPrivate;
 
 struct _FlasherApplication
 {
   AdwApplication parent_instance;
 };
 
-G_DEFINE_TYPE (FlasherApplication, flasher_application, ADW_TYPE_APPLICATION)
+G_DEFINE_TYPE_WITH_PRIVATE (FlasherApplication, flasher_application, ADW_TYPE_APPLICATION)
 
 FlasherApplication *
 flasher_application_new (const char        *application_id,
@@ -64,10 +73,27 @@ flasher_application_activate (GApplication *app)
 }
 
 static void
+flasher_application_startup (GApplication *app)
+{
+  FlasherApplicationPrivate *priv;
+
+  priv = flasher_application_get_instance_private (FLASHER_APPLICATION (app));
+
+  G_APPLICATION_CLASS (flasher_application_parent_class)->startup(app);
+
+  priv->engine = flasher_plugins_engine_get_default ();
+  priv->extensions = peas_extension_set_new (PEAS_ENGINE (priv->engine),
+                                             FLASHER_TYPE_APPLICATION_ACTIVATABLE,
+                                             "application", FLASHER_APPLICATION (app),
+                                             NULL);
+}
+
+static void
 flasher_application_class_init (FlasherApplicationClass *klass)
 {
   GApplicationClass *app_class = G_APPLICATION_CLASS (klass);
 
+  app_class->startup = flasher_application_startup;
   app_class->activate = flasher_application_activate;
 }
 

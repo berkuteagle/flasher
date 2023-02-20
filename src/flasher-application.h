@@ -1,6 +1,6 @@
 /* MIT License
  *
- * Copyright (c) 2023 Антон Снигирёв
+ * Copyright (c) 2023 Anton Snigirev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,3 +37,4 @@ FlasherApplication *flasher_application_new (const char        *application_id,
                                              GApplicationFlags  flags);
 
 G_END_DECLS
+

@@ -25,12 +25,20 @@
 
 #pragma once
 
-#include <adwaita.h>
+#include <glib-object.h>
 
-G_BEGIN_DECLS
+#define FLASHER_TYPE_APPLICATION_ACTIVATABLE (flasher_application_activatable_get_type())
 
-#define FLASHER_TYPE_WINDOW (flasher_window_get_type())
+G_DECLARE_INTERFACE (FlasherApplicationActivatable, flasher_application_activatable, FLASHER, APPLICATION_ACTIVATABLE, GObject)
 
-G_DECLARE_FINAL_TYPE (FlasherWindow, flasher_window, FLASHER, WINDOW, AdwApplicationWindow)
+struct _FlasherApplicationActivatableInterface
+{
+  GTypeInterface g_iface;
 
-G_END_DECLS
+  void(*activate)     (FlasherApplicationActivatable *activatable);
+  void(*deactivate)   (FlasherApplicationActivatable *activatable);
+};
+
+void    flasher_application_activatable_activate     (FlasherApplicationActivatable *activatable);
+void    flasher_application_activatable_deactivate   (FlasherApplicationActivatable *activatable);
+
