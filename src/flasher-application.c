@@ -102,7 +102,7 @@ flasher_application_about_action (GSimpleAction *action,
                                   GVariant      *parameter,
                                   gpointer       user_data)
 {
-  static const char *developers[] = {"Антон Снигирёв", NULL};
+  static const char *developers[] = {"Anton Snigirev", NULL};
   FlasherApplication *self = user_data;
   GtkWindow *window = NULL;
 
@@ -113,10 +113,10 @@ flasher_application_about_action (GSimpleAction *action,
   adw_show_about_window (window,
                          "application-name", "flasher",
                          "application-icon", "com.github.berkuteagle.flasher",
-                         "developer-name", "Антон Снигирёв",
+                         "developer-name", "Anton Snigirev",
                          "version", "0.1.0",
                          "developers", developers,
-                         "copyright", "© 2023 Антон Снигирёв",
+                         "copyright", "© 2023 Anton Snigirev",
                          NULL);
 }
 

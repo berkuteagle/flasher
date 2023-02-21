@@ -1,5 +1,5 @@
 flasher_sources = [
-  'main.c',
+  'flasher.c',
   'flasher-application.c',
   'flasher-application-activatable.c',
   'flasher-window.c',

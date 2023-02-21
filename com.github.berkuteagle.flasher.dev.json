@@ -55,12 +55,7 @@
             "name" : "flasher",
             "builddir" : true,
             "buildsystem" : "meson",
-            "sources" : [
-                {
-                    "type" : "dir",
-                    "path" : "."
-                }
-            ]
+            "sources" : []
         }
     ]
 }
