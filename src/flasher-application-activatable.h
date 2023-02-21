@@ -27,7 +27,9 @@
 
 #include <glib-object.h>
 
-#define FLASHER_TYPE_APPLICATION_ACTIVATABLE (flasher_application_activatable_get_type())
+G_BEGIN_DECLS
+
+#define FLASHER_TYPE_APPLICATION_ACTIVATABLE (flasher_application_activatable_get_type ())
 
 G_DECLARE_INTERFACE (FlasherApplicationActivatable, flasher_application_activatable, FLASHER, APPLICATION_ACTIVATABLE, GObject)
 
@@ -35,10 +37,11 @@ struct _FlasherApplicationActivatableInterface
 {
   GTypeInterface g_iface;
 
-  void(*activate)     (FlasherApplicationActivatable *activatable);
-  void(*deactivate)   (FlasherApplicationActivatable *activatable);
+  void (*activate) (FlasherApplicationActivatable *activatable);
+  void (*deactivate) (FlasherApplicationActivatable *activatable);
 };
 
-void    flasher_application_activatable_activate     (FlasherApplicationActivatable *activatable);
-void    flasher_application_activatable_deactivate   (FlasherApplicationActivatable *activatable);
+void flasher_application_activatable_activate (FlasherApplicationActivatable *activatable);
+void flasher_application_activatable_deactivate (FlasherApplicationActivatable *activatable);
 
+G_END_DECLS

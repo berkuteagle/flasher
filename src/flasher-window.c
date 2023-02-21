@@ -29,11 +29,10 @@
 
 struct _FlasherWindow
 {
-  AdwApplicationWindow  parent_instance;
+  AdwApplicationWindow parent_instance;
 
-  /* Template widgets */
-  GtkHeaderBar        *header_bar;
-  GtkLabel            *label;
+  GtkHeaderBar *header_bar;
+  GtkLabel     *label;
 };
 
 G_DEFINE_FINAL_TYPE (FlasherWindow, flasher_window, ADW_TYPE_APPLICATION_WINDOW)

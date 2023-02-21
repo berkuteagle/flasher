@@ -25,10 +25,10 @@
 
 #include "config.h"
 
-#include "flasher-application.h"
 #include "flasher-application-activatable.h"
-#include "flasher-window.h"
+#include "flasher-application.h"
 #include "flasher-plugins-engine.h"
+#include "flasher-window.h"
 
 typedef struct
 {
@@ -45,15 +45,11 @@ struct _FlasherApplication
 G_DEFINE_TYPE_WITH_PRIVATE (FlasherApplication, flasher_application, ADW_TYPE_APPLICATION)
 
 FlasherApplication *
-flasher_application_new (const char        *application_id,
-                         GApplicationFlags  flags)
+flasher_application_new (const char *application_id, GApplicationFlags flags)
 {
   g_return_val_if_fail (application_id != NULL, NULL);
 
-  return g_object_new (FLASHER_TYPE_APPLICATION,
-                       "application-id", application_id,
-                       "flags", flags,
-                       NULL);
+  return g_object_new (FLASHER_TYPE_APPLICATION, "application-id", application_id, "flags", flags, NULL);
 }
 
 static void
@@ -65,9 +61,7 @@ flasher_application_activate (GApplication *app)
 
   window = gtk_application_get_active_window (GTK_APPLICATION (app));
   if (window == NULL)
-    window = g_object_new (FLASHER_TYPE_WINDOW,
-                           "application", app,
-                           NULL);
+    window = g_object_new (FLASHER_TYPE_WINDOW, "application", app, NULL);
 
   gtk_window_present (window);
 }
@@ -79,13 +73,11 @@ flasher_application_startup (GApplication *app)
 
   priv = flasher_application_get_instance_private (FLASHER_APPLICATION (app));
 
-  G_APPLICATION_CLASS (flasher_application_parent_class)->startup(app);
+  G_APPLICATION_CLASS (flasher_application_parent_class)->startup (app);
 
-  priv->engine = flasher_plugins_engine_get_default ();
-  priv->extensions = peas_extension_set_new (PEAS_ENGINE (priv->engine),
-                                             FLASHER_TYPE_APPLICATION_ACTIVATABLE,
-                                             "application", FLASHER_APPLICATION (app),
-                                             NULL);
+  priv->engine     = flasher_plugins_engine_get_default ();
+  priv->extensions = peas_extension_set_new (PEAS_ENGINE (priv->engine), FLASHER_TYPE_APPLICATION_ACTIVATABLE,
+                                             "application", FLASHER_APPLICATION (app), NULL);
 }
 
 static void
@@ -93,37 +85,28 @@ flasher_application_class_init (FlasherApplicationClass *klass)
 {
   GApplicationClass *app_class = G_APPLICATION_CLASS (klass);
 
-  app_class->startup = flasher_application_startup;
+  app_class->startup  = flasher_application_startup;
   app_class->activate = flasher_application_activate;
 }
 
 static void
-flasher_application_about_action (GSimpleAction *action,
-                                  GVariant      *parameter,
-                                  gpointer       user_data)
+flasher_application_about_action (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
-  static const char *developers[] = {"Anton Snigirev", NULL};
-  FlasherApplication *self = user_data;
-  GtkWindow *window = NULL;
+  static const char  *developers[] = { "Anton Snigirev", NULL };
+  FlasherApplication *self         = user_data;
+  GtkWindow          *window       = NULL;
 
   g_assert (FLASHER_IS_APPLICATION (self));
 
   window = gtk_application_get_active_window (GTK_APPLICATION (self));
 
-  adw_show_about_window (window,
-                         "application-name", "flasher",
-                         "application-icon", "com.github.berkuteagle.flasher",
-                         "developer-name", "Anton Snigirev",
-                         "version", "0.1.0",
-                         "developers", developers,
-                         "copyright", "© 2023 Anton Snigirev",
-                         NULL);
+  adw_show_about_window (window, "application-name", "flasher", "application-icon", "com.github.berkuteagle.flasher",
+                         "developer-name", "Anton Snigirev", "version", "0.1.0", "developers", developers, "copyright",
+                         "© 2023 Anton Snigirev", NULL);
 }
 
 static void
-flasher_application_quit_action (GSimpleAction *action,
-                                 GVariant      *parameter,
-                                 gpointer       user_data)
+flasher_application_quit_action (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
   FlasherApplication *self = user_data;
 
@@ -133,19 +116,13 @@ flasher_application_quit_action (GSimpleAction *action,
 }
 
 static const GActionEntry app_actions[] = {
-  { "quit", flasher_application_quit_action },
-  { "about", flasher_application_about_action },
+  {"quit",   flasher_application_quit_action },
+  { "about", flasher_application_about_action},
 };
 
 static void
 flasher_application_init (FlasherApplication *self)
 {
-  g_action_map_add_action_entries (G_ACTION_MAP (self),
-                                   app_actions,
-                                   G_N_ELEMENTS (app_actions),
-                                   self);
-  gtk_application_set_accels_for_action (GTK_APPLICATION (self),
-                                         "app.quit",
-                                         (const char *[]) { "<primary>q", NULL });
+  g_action_map_add_action_entries (G_ACTION_MAP (self), app_actions, G_N_ELEMENTS (app_actions), self);
+  gtk_application_set_accels_for_action (GTK_APPLICATION (self), "app.quit", (const char *[]){ "<primary>q", NULL });
 }
-

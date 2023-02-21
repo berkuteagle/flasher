@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-#define FLASHER_TYPE_WINDOW (flasher_window_get_type())
+#define FLASHER_TYPE_WINDOW (flasher_window_get_type ())
 
 G_DECLARE_FINAL_TYPE (FlasherWindow, flasher_window, FLASHER, WINDOW, AdwApplicationWindow)
 

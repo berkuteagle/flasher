@@ -26,19 +26,13 @@
 #include "flasher-application-activatable.h"
 #include "flasher-application.h"
 
-G_DEFINE_INTERFACE(FlasherApplicationActivatable, flasher_application_activatable, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (FlasherApplicationActivatable, flasher_application_activatable, G_TYPE_OBJECT)
 
 static void
 flasher_application_activatable_default_init (FlasherApplicationActivatableInterface *iface)
 {
-  g_object_interface_install_property(iface,
-                                      g_param_spec_object("application",
-                                                          "Application",
-                                                          "Flasher application",
-                                                          FLASHER_TYPE_APPLICATION,
-                                                          G_PARAM_READWRITE|
-                                                          G_PARAM_CONSTRUCT_ONLY|
-                                                          G_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface, g_param_spec_object ("application", "Application", "Flasher application", FLASHER_TYPE_APPLICATION,
+                                                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
 
 void
@@ -46,12 +40,12 @@ flasher_application_activatable_activate (FlasherApplicationActivatable *activat
 {
   FlasherApplicationActivatableInterface *iface;
 
-  g_return_if_fail(FLASHER_IS_APPLICATION_ACTIVATABLE(activatable));
+  g_return_if_fail (FLASHER_IS_APPLICATION_ACTIVATABLE (activatable));
 
-  iface = FLASHER_APPLICATION_ACTIVATABLE_GET_IFACE(activatable);
+  iface = FLASHER_APPLICATION_ACTIVATABLE_GET_IFACE (activatable);
 
   if (iface->activate != NULL)
-    iface->activate(activatable);
+    iface->activate (activatable);
 }
 
 void
@@ -59,11 +53,10 @@ flasher_application_activatable_deactivate (FlasherApplicationActivatable *activ
 {
   FlasherApplicationActivatableInterface *iface;
 
-  g_return_if_fail(FLASHER_IS_APPLICATION_ACTIVATABLE(activatable));
+  g_return_if_fail (FLASHER_IS_APPLICATION_ACTIVATABLE (activatable));
 
-  iface = FLASHER_APPLICATION_ACTIVATABLE_GET_IFACE(activatable);
+  iface = FLASHER_APPLICATION_ACTIVATABLE_GET_IFACE (activatable);
 
   if (iface->deactivate != NULL)
-    iface->deactivate(activatable);
+    iface->deactivate (activatable);
 }
-

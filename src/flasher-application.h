@@ -29,12 +29,10 @@
 
 G_BEGIN_DECLS
 
-#define FLASHER_TYPE_APPLICATION (flasher_application_get_type())
+#define FLASHER_TYPE_APPLICATION (flasher_application_get_type ())
 
 G_DECLARE_FINAL_TYPE (FlasherApplication, flasher_application, FLASHER, APPLICATION, AdwApplication)
 
-FlasherApplication *flasher_application_new (const char        *application_id,
-                                             GApplicationFlags  flags);
+FlasherApplication *flasher_application_new (const char *application_id, GApplicationFlags flags);
 
 G_END_DECLS
-

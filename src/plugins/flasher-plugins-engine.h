@@ -28,9 +28,12 @@
 #include <glib.h>
 #include <libpeas/peas.h>
 
+G_BEGIN_DECLS
+
 #define FLASHER_TYPE_PLUGINS_ENGINE (flasher_plugins_engine_get_type ())
-G_DECLARE_FINAL_TYPE(FlasherPluginsEngine, flasher_plugins_engine, FLASHER, PLUGINS_ENGINE, PeasEngine)
+G_DECLARE_FINAL_TYPE (FlasherPluginsEngine, flasher_plugins_engine, FLASHER, PLUGINS_ENGINE, PeasEngine)
 
-FlasherPluginsEngine    *flasher_plugins_engine_get_default   (void);
-void                    flasher_plugins_engine_shut_down      (FlasherPluginsEngine *self);
+FlasherPluginsEngine *flasher_plugins_engine_get_default (void);
+void                  flasher_plugins_engine_shut_down (FlasherPluginsEngine *self);
 
+G_END_DECLS
