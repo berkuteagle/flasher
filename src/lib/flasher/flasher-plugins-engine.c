@@ -43,13 +43,11 @@ static FlasherPluginsEngine *default_engine = NULL;
 static void
 flasher_plugins_engine_init (FlasherPluginsEngine *engine)
 {
-  engine->plugin_settings = g_settings_new ("com.github.berkuteagle.flasher."
-                                            "plugins");
+  engine->plugin_settings = g_settings_new ("com.github.berkuteagle.flasher.plugins");
 
   g_irepository_require (g_irepository_get_default (), "Peas", "1.0", 0, NULL);
-  g_irepository_require (g_irepository_get_default (), "PeasGtk", "1.0", 0, NULL);
 
-  peas_engine_add_search_path (PEAS_ENGINE (engine), g_build_filename (LIBDIR, "flasher", NULL),
+  peas_engine_add_search_path (PEAS_ENGINE (engine), g_build_filename (LIBDIR, "flasher", "plugins", NULL),
                                g_build_filename (DATADIR, "flasher", "plugins", NULL));
 
   g_settings_bind (engine->plugin_settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT);

@@ -23,40 +23,40 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "flasher-application-activatable.h"
-#include "flasher-application.h"
+#include "flasher-file-extension.h"
+#include "flasher-object.h"
 
-G_DEFINE_INTERFACE (FlasherApplicationActivatable, flasher_application_activatable, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (FlasherFileExtension, flasher_file_extension, G_TYPE_OBJECT)
 
 static void
-flasher_application_activatable_default_init (FlasherApplicationActivatableInterface *iface)
+flasher_file_extension_default_init (FlasherFileExtensionInterface *iface)
 {
-  g_object_interface_install_property (iface, g_param_spec_object ("application", "Application", "Flasher application", FLASHER_TYPE_APPLICATION,
+  g_object_interface_install_property (iface, g_param_spec_object ("flasher", "Flasher", "Flasher Object", FLASHER_TYPE_OBJECT,
                                                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
 
 void
-flasher_application_activatable_activate (FlasherApplicationActivatable *activatable)
+flasher_file_extension_load_file (FlasherFileExtension *extension)
 {
-  FlasherApplicationActivatableInterface *iface;
+  FlasherFileExtensionInterface *iface;
 
-  g_return_if_fail (FLASHER_IS_APPLICATION_ACTIVATABLE (activatable));
+  g_return_if_fail (FLASHER_IS_FILE_EXTENSION (extension));
 
-  iface = FLASHER_APPLICATION_ACTIVATABLE_GET_IFACE (activatable);
+  iface = FLASHER_FILE_EXTENSION_GET_IFACE (extension);
 
-  if (iface->activate != NULL)
-    iface->activate (activatable);
+  if (iface->load_file != NULL)
+    iface->load_file (extension);
 }
 
 void
-flasher_application_activatable_deactivate (FlasherApplicationActivatable *activatable)
+flasher_file_extension_get_mime_types (FlasherFileExtension *extension)
 {
-  FlasherApplicationActivatableInterface *iface;
+  FlasherFileExtensionInterface *iface;
 
-  g_return_if_fail (FLASHER_IS_APPLICATION_ACTIVATABLE (activatable));
+  g_return_if_fail (FLASHER_IS_FILE_EXTENSION (extension));
 
-  iface = FLASHER_APPLICATION_ACTIVATABLE_GET_IFACE (activatable);
+  iface = FLASHER_FILE_EXTENSION_GET_IFACE (extension);
 
-  if (iface->deactivate != NULL)
-    iface->deactivate (activatable);
+  if (iface->get_mime_types != NULL)
+    iface->get_mime_types (extension);
 }

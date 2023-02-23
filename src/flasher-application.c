@@ -23,18 +23,16 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <flasher/flasher-object.h>
+
 #include "config.h"
 
-#include "flasher-application-activatable.h"
 #include "flasher-application.h"
-#include "flasher-plugins-engine.h"
 #include "flasher-window.h"
 
 typedef struct
 {
-  FlasherPluginsEngine *engine;
-
-  PeasExtensionSet *extensions;
+  FlasherObject        *flasher;
 } FlasherApplicationPrivate;
 
 struct _FlasherApplication
@@ -75,9 +73,7 @@ flasher_application_startup (GApplication *app)
 
   G_APPLICATION_CLASS (flasher_application_parent_class)->startup (app);
 
-  priv->engine     = flasher_plugins_engine_get_default ();
-  priv->extensions = peas_extension_set_new (PEAS_ENGINE (priv->engine), FLASHER_TYPE_APPLICATION_ACTIVATABLE,
-                                             "application", FLASHER_APPLICATION (app), NULL);
+  priv->flasher    = flasher_object_new ();
 }
 
 static void

@@ -1,0 +1,9 @@
+[Plugin]
+Module=ihex-1.0
+IAge=1
+Builtin=true
+Name=iHEX Plugin
+Description=Allows screenshots and galleries to be taken of videos
+Authors=Anton Snigirev
+Copyright=Copyright © 2023 Anton Snigirev
+Website=https://wiki.gnome.org/

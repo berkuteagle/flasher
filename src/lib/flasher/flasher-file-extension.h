@@ -26,22 +26,23 @@
 #pragma once
 
 #include <glib-object.h>
+#include <glib.h>
 
 G_BEGIN_DECLS
 
-#define FLASHER_TYPE_APPLICATION_ACTIVATABLE (flasher_application_activatable_get_type ())
+#define FLASHER_TYPE_FILE_EXTENSION (flasher_file_extension_get_type ())
 
-G_DECLARE_INTERFACE (FlasherApplicationActivatable, flasher_application_activatable, FLASHER, APPLICATION_ACTIVATABLE, GObject)
+G_DECLARE_INTERFACE (FlasherFileExtension, flasher_file_extension, FLASHER, FILE_EXTENSION, GObject)
 
-struct _FlasherApplicationActivatableInterface
+struct _FlasherFileExtensionInterface
 {
   GTypeInterface g_iface;
 
-  void (*activate) (FlasherApplicationActivatable *activatable);
-  void (*deactivate) (FlasherApplicationActivatable *activatable);
+  void (*load_file) (FlasherFileExtension *extension);
+  void (*get_mime_types) (FlasherFileExtension *extension);
 };
 
-void flasher_application_activatable_activate (FlasherApplicationActivatable *activatable);
-void flasher_application_activatable_deactivate (FlasherApplicationActivatable *activatable);
+void flasher_file_extension_load_file (FlasherFileExtension *extension);
+void flasher_file_extension_get_mime_types (FlasherFileExtension *extension);
 
 G_END_DECLS

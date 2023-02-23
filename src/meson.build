@@ -1,16 +1,23 @@
-flasher_sources = [
+api_version = '1.0'
+
+libpeas_dep = dependency('libpeas-1.0')
+glib_dep = dependency('glib-2.0')
+
+subdir('lib')
+
+flasher_sources = files(
   'flasher.c',
   'flasher-application.c',
-  'flasher-application-activatable.c',
   'flasher-window.c',
-]
+)
 
-flasher_include = include_directories('.')
+flasher_include = [include_directories('.'), flasher_lib_include]
 
-flasher_deps = [
+flasher_dependencies = [
   dependency('gtk4'),
   dependency('libadwaita-1'),
-  dependency('libpeas-1.0'),
+  glib_dep,
+  flasher_dep
 ]
 
 flasher_sources += gnome.compile_resources('flasher-resources',
@@ -20,8 +27,10 @@ flasher_sources += gnome.compile_resources('flasher-resources',
 
 subdir('plugins')
 
-executable('flasher', flasher_sources,
+executable(
+            'flasher',
+      flasher_sources,
   include_directories: flasher_include,
-         dependencies: flasher_deps,
+         dependencies: flasher_dependencies,
               install: true,
 )
