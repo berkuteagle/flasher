@@ -1,7 +1,6 @@
 [Plugin]
 Module=ihex-1.0
-IAge=1
-Builtin=true
+IAge=3
 Name=iHEX Plugin
 Description=Allows screenshots and galleries to be taken of videos
 Authors=Anton Snigirev

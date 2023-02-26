@@ -40,5 +40,6 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (FlasherObject, flasher_object, FLASHER, OBJECT, GObject)
 
 FlasherObject *flasher_object_new (void);
+void           flasher_object_get_mime_types (FlasherObject *self);
 
 G_END_DECLS

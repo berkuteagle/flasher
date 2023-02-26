@@ -39,10 +39,10 @@ struct _FlasherFileExtensionInterface
   GTypeInterface g_iface;
 
   void (*load_file) (FlasherFileExtension *extension);
-  void (*get_mime_types) (FlasherFileExtension *extension);
+  GArray *(*get_mime_types) (FlasherFileExtension *extension);
 };
 
-void flasher_file_extension_load_file (FlasherFileExtension *extension);
-void flasher_file_extension_get_mime_types (FlasherFileExtension *extension);
+void    flasher_file_extension_load_file (FlasherFileExtension *extension);
+GArray *flasher_file_extension_get_mime_types (FlasherFileExtension *extension);
 
 G_END_DECLS

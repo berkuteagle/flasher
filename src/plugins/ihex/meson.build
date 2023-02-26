@@ -10,7 +10,7 @@ msgfmt_plugin_cmd = [
   '--output=@OUTPUT@'
 ]
 
-shared_module(
+shared_library(
   plugin_name,
   files('flasher-ihex.c'),
   include_directories: [include_directories('.'), flasher_lib_include],

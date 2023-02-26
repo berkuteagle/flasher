@@ -48,7 +48,7 @@ flasher_plugins_engine_init (FlasherPluginsEngine *engine)
   g_irepository_require (g_irepository_get_default (), "Peas", "1.0", 0, NULL);
 
   peas_engine_add_search_path (PEAS_ENGINE (engine), g_build_filename (LIBDIR, "flasher", "plugins", NULL),
-                               g_build_filename (DATADIR, "flasher", "plugins", NULL));
+                               g_build_filename (LIBDIR, "flasher", "plugins", NULL));
 
   g_settings_bind (engine->plugin_settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT);
 }

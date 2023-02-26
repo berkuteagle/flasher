@@ -26,17 +26,16 @@
 #pragma once
 
 #include <flasher/flasher-file-extension.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <libpeas/peas-extension-base.h>
-#include <libpeas/peas-object-module.h>
 #include <libpeas/peas.h>
 
 G_BEGIN_DECLS
 
 #define FLASHER_TYPE_PLUGIN_IHEX (flasher_plugin_ihex_get_type ())
+
 G_DECLARE_FINAL_TYPE (FlasherPluginIHex, flasher_plugin_ihex, FLASHER, PLUGIN_IHEX, PeasExtensionBase)
 
-void flasher_file_extension_ihex_get_mime_types (FlasherFileExtension *extension);
+GArray *flasher_file_extension_ihex_get_mime_types (FlasherFileExtension *extension);
+
+G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);
 
 G_END_DECLS

@@ -23,8 +23,16 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <libpeas/peas.h>
+
+#include "flasher-file-extension.h"
 #include "flasher-object.h"
 #include "flasher-plugins-engine.h"
+
+typedef struct
+{
+  GArray *mime_types;
+} FlasherObjectPrivate;
 
 struct _FlasherObject
 {
@@ -32,12 +40,19 @@ struct _FlasherObject
   FlasherPluginsEngine *engine;
 };
 
-G_DEFINE_FINAL_TYPE (FlasherObject, flasher_object, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE_WITH_PRIVATE (FlasherObject, flasher_object, G_TYPE_OBJECT)
 
 static void
 flasher_object_init (FlasherObject *self)
 {
+  FlasherObjectPrivate *priv;
+
   self->engine = flasher_plugins_engine_get_default ();
+
+  priv             = flasher_object_get_instance_private (self);
+  priv->mime_types = NULL;
+
+  flasher_object_get_mime_types (self);
 }
 
 static void
@@ -49,4 +64,40 @@ FlasherObject *
 flasher_object_new (void)
 {
   return g_object_new (FLASHER_TYPE_OBJECT, NULL);
+}
+
+static void
+on_extension_check (PeasExtensionSet *set, PeasPluginInfo *info, FlasherFileExtension *exten, GArray *mime_types)
+{
+  GArray *types;
+
+  g_message ("Check extension %s", peas_plugin_info_get_name (info));
+
+  types = flasher_file_extension_get_mime_types (exten);
+
+  if (types != NULL)
+    {
+      g_array_append_vals (mime_types, types, types->len);
+      g_array_free (types, FALSE);
+    }
+}
+
+void
+flasher_object_get_mime_types (FlasherObject *self)
+{
+  FlasherObjectPrivate *priv = flasher_object_get_instance_private (self);
+  if (priv->mime_types == NULL)
+    priv->mime_types = g_array_new (FALSE, FALSE, sizeof (char *));
+
+  if (priv->mime_types->len == 0)
+    {
+      PeasExtensionSet *set;
+      g_message ("Load extensions...");
+
+      set = peas_extension_set_new (PEAS_ENGINE (self->engine), FLASHER_TYPE_FILE_EXTENSION, NULL);
+
+      peas_extension_set_foreach (set, (PeasExtensionSetForeachFunc) on_extension_check, priv->mime_types);
+    }
+
+  g_message ("Number of registered mime types: %d", priv->mime_types->len);
 }

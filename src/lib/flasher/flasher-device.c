@@ -23,42 +23,27 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "flasher-file-extension.h"
-#include "flasher-object.h"
+#include "flasher-device.h"
 
-G_DEFINE_INTERFACE (FlasherFileExtension, flasher_file_extension, G_TYPE_OBJECT)
+struct _FlasherDevice
+{
+  GObject parent_instance;
+};
+
+G_DEFINE_FINAL_TYPE (FlasherDevice, flasher_device, G_TYPE_OBJECT)
 
 static void
-flasher_file_extension_default_init (FlasherFileExtensionInterface *iface)
+flasher_device_init (FlasherDevice *self)
 {
-  g_object_interface_install_property (iface, g_param_spec_object ("flasher", "Flasher", "Flasher Object", FLASHER_TYPE_OBJECT,
-                                                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
 
-void
-flasher_file_extension_load_file (FlasherFileExtension *extension)
+static void
+flasher_device_class_init (FlasherDeviceClass *klass)
 {
-  FlasherFileExtensionInterface *iface;
-
-  g_return_if_fail (FLASHER_IS_FILE_EXTENSION (extension));
-
-  iface = FLASHER_FILE_EXTENSION_GET_IFACE (extension);
-
-  if (iface->load_file != NULL)
-    iface->load_file (extension);
 }
 
-GArray *
-flasher_file_extension_get_mime_types (FlasherFileExtension *extension)
+FlasherDevice *
+flasher_device_new (void)
 {
-  FlasherFileExtensionInterface *iface;
-
-  g_return_val_if_fail (FLASHER_IS_FILE_EXTENSION (extension), NULL);
-
-  iface = FLASHER_FILE_EXTENSION_GET_IFACE (extension);
-
-  if (iface->get_mime_types != NULL)
-    return iface->get_mime_types (extension);
-
-  return NULL;
+  return g_object_new (FLASHER_TYPE_DEVICE, NULL);
 }
