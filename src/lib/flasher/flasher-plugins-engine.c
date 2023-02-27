@@ -43,6 +43,8 @@ static FlasherPluginsEngine *default_engine = NULL;
 static void
 flasher_plugins_engine_init (FlasherPluginsEngine *engine)
 {
+  const GList *plugins, *l;
+
   engine->plugin_settings = g_settings_new ("com.github.berkuteagle.flasher.plugins");
 
   g_irepository_require (g_irepository_get_default (), "Peas", "1.0", 0, NULL);
@@ -50,7 +52,19 @@ flasher_plugins_engine_init (FlasherPluginsEngine *engine)
   peas_engine_add_search_path (PEAS_ENGINE (engine), g_build_filename (LIBDIR, "flasher", "plugins", NULL),
                                g_build_filename (LIBDIR, "flasher", "plugins", NULL));
 
-  g_settings_bind (engine->plugin_settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT);
+  plugins = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
+
+  for (l = plugins; l != NULL; l = l->next)
+    {
+      if (peas_plugin_info_is_builtin (l->data))
+        {
+          gboolean loaded;
+
+          loaded = peas_engine_load_plugin (PEAS_ENGINE (engine), l->data);
+          if (! loaded)
+            g_warning ("Failed to load builtin plugin: %s", peas_plugin_info_get_name (l->data));
+        }
+    }
 }
 
 static void

@@ -47,11 +47,13 @@ flasher_ihex_plugin_iface_init (FlasherFileExtensionInterface *iface)
 static void
 flasher_plugin_ihex_init (FlasherPluginIHex *plugin)
 {
+  g_message ("iHEX init");
 }
 
 static void
 flasher_plugin_ihex_class_init (FlasherPluginIHexClass *klass)
 {
+  g_message ("iHEX class init");
 }
 
 GArray *
@@ -66,7 +68,7 @@ flasher_file_extension_ihex_get_mime_types (FlasherFileExtension *extension)
 G_MODULE_EXPORT void
 peas_register_types (PeasObjectModule *module)
 {
-  g_message ("Register peas types: ihex");
+  g_message ("Register peas types: iHEX");
 
   // flasher_plugin_ihex_register_type (G_TYPE_MODULE (module));
   peas_object_module_register_extension_type (module, FLASHER_TYPE_FILE_EXTENSION, FLASHER_TYPE_PLUGIN_IHEX);

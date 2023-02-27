@@ -85,7 +85,10 @@ on_extension_check (PeasExtensionSet *set, PeasPluginInfo *info, FlasherFileExte
 void
 flasher_object_get_mime_types (FlasherObject *self)
 {
-  FlasherObjectPrivate *priv = flasher_object_get_instance_private (self);
+  FlasherObjectPrivate *priv;
+
+  priv = flasher_object_get_instance_private (self);
+
   if (priv->mime_types == NULL)
     priv->mime_types = g_array_new (FALSE, FALSE, sizeof (char *));
 
