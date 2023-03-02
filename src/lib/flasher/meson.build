@@ -3,6 +3,7 @@ flasher_lib_sources = files(
   'flasher-device-extension.c',
   'flasher-file-extension.c',
   'flasher-plugins-engine.c',
+  'flasher-extension.c',
   'flasher-file.c',
   'flasher-device.c',
 )
@@ -13,6 +14,7 @@ flasher_lib_headers = files(
   'flasher-file-extension.h',
   'flasher-file.h',
   'flasher-device.h',
+  'flasher-extension.h',
 )
 
 flasher_lib_dependencies = [

@@ -35,6 +35,8 @@ enum
 
 G_BEGIN_DECLS
 
+typedef struct _FlasherObjectPrivate FlasherObjectPrivate;
+
 #define FLASHER_TYPE_OBJECT (flasher_object_get_type ())
 
 G_DECLARE_FINAL_TYPE (FlasherObject, flasher_object, FLASHER, OBJECT, GObject)

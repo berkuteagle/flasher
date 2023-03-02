@@ -28,11 +28,13 @@
 #include <glib-object.h>
 #include <glib.h>
 
+#include "flasher-extension.h"
+
 G_BEGIN_DECLS
 
 #define FLASHER_TYPE_FILE_EXTENSION (flasher_file_extension_get_type ())
 
-G_DECLARE_INTERFACE (FlasherFileExtension, flasher_file_extension, FLASHER, FILE_EXTENSION, GObject)
+G_DECLARE_INTERFACE (FlasherFileExtension, flasher_file_extension, FLASHER, FILE_EXTENSION, FlasherExtension)
 
 struct _FlasherFileExtensionInterface
 {

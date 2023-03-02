@@ -25,7 +25,6 @@
 
 #include <config.h>
 #include <girepository.h>
-#include <glib.h>
 
 #include "flasher-plugins-engine.h"
 

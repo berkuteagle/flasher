@@ -25,26 +25,18 @@
 
 #pragma once
 
+#include <flasher/flasher-object.h>
 #include <glib-object.h>
-#include <glib.h>
-
-#include "flasher-extension.h"
 
 G_BEGIN_DECLS
 
-#define FLASHER_TYPE_DEVICE_EXTENSION (flasher_device_extension_get_type ())
+#define FLASHER_TYPE_EXTENSION (flasher_extension_get_type ())
 
-G_DECLARE_INTERFACE (FlasherDeviceExtension, flasher_device_extension, FLASHER, DEVICE_EXTENSION, FlasherExtension)
+G_DECLARE_INTERFACE (FlasherExtension, flasher_extension, FLASHER, EXTENSION, GObject)
 
-struct _FlasherDeviceExtensionInterface
+struct _FlasherExtensionInterface
 {
   GTypeInterface g_iface;
-
-  void (*activate) (FlasherDeviceExtension *extension);
-  void (*deactivate) (FlasherDeviceExtension *extension);
 };
-
-void flasher_device_extension_activate (FlasherDeviceExtension *extension);
-void flasher_device_extension_deactivate (FlasherDeviceExtension *extension);
 
 G_END_DECLS

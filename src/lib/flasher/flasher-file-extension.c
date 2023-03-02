@@ -24,15 +24,12 @@
  */
 
 #include "flasher-file-extension.h"
-#include "flasher-object.h"
 
-G_DEFINE_INTERFACE (FlasherFileExtension, flasher_file_extension, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (FlasherFileExtension, flasher_file_extension, FLASHER_TYPE_EXTENSION)
 
 static void
 flasher_file_extension_default_init (FlasherFileExtensionInterface *iface)
 {
-  g_object_interface_install_property (iface, g_param_spec_object ("flasher", "Flasher", "Flasher Object", FLASHER_TYPE_OBJECT,
-                                                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
 
 void

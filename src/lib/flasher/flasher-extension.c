@@ -23,28 +23,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-#pragma once
-
-#include <glib-object.h>
-#include <glib.h>
-
 #include "flasher-extension.h"
+#include "flasher-object.h"
 
-G_BEGIN_DECLS
+G_DEFINE_INTERFACE (FlasherExtension, flasher_extension, G_TYPE_OBJECT)
 
-#define FLASHER_TYPE_DEVICE_EXTENSION (flasher_device_extension_get_type ())
-
-G_DECLARE_INTERFACE (FlasherDeviceExtension, flasher_device_extension, FLASHER, DEVICE_EXTENSION, FlasherExtension)
-
-struct _FlasherDeviceExtensionInterface
+void
+flasher_extension_default_init (FlasherExtensionInterface *iface)
 {
-  GTypeInterface g_iface;
-
-  void (*activate) (FlasherDeviceExtension *extension);
-  void (*deactivate) (FlasherDeviceExtension *extension);
-};
-
-void flasher_device_extension_activate (FlasherDeviceExtension *extension);
-void flasher_device_extension_deactivate (FlasherDeviceExtension *extension);
-
-G_END_DECLS
+  g_object_interface_install_property (iface, g_param_spec_object ("flasher", "Flasher", "Flasher Object", FLASHER_TYPE_OBJECT,
+                                                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
+}

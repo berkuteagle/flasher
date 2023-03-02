@@ -29,10 +29,10 @@
 #include "flasher-object.h"
 #include "flasher-plugins-engine.h"
 
-typedef struct
+struct _FlasherObjectPrivate
 {
   GArray *mime_types;
-} FlasherObjectPrivate;
+};
 
 struct _FlasherObject
 {
@@ -97,7 +97,7 @@ flasher_object_get_mime_types (FlasherObject *self)
       PeasExtensionSet *set;
       g_message ("Load extensions...");
 
-      set = peas_extension_set_new (PEAS_ENGINE (self->engine), FLASHER_TYPE_FILE_EXTENSION, NULL);
+      set = peas_extension_set_new (PEAS_ENGINE (self->engine), FLASHER_TYPE_FILE_EXTENSION, "flasher", self, NULL);
 
       peas_extension_set_foreach (set, (PeasExtensionSetForeachFunc) on_extension_check, priv->mime_types);
     }
