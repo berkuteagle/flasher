@@ -41,8 +41,9 @@ flasher_file_extension_load_file (FlasherFileExtension *extension)
 
   iface = FLASHER_FILE_EXTENSION_GET_IFACE (extension);
 
-  if (iface->load_file != NULL)
-    iface->load_file (extension);
+  g_return_if_fail (iface->load_file != NULL);
+
+  iface->load_file (extension);
 }
 
 GArray *
@@ -54,8 +55,7 @@ flasher_file_extension_get_mime_types (FlasherFileExtension *extension)
 
   iface = FLASHER_FILE_EXTENSION_GET_IFACE (extension);
 
-  if (iface->get_mime_types != NULL)
-    return iface->get_mime_types (extension);
+  g_return_val_if_fail (iface->get_mime_types != NULL, NULL);
 
-  return NULL;
+  return iface->get_mime_types (extension);
 }
