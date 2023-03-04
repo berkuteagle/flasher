@@ -23,25 +23,33 @@
  * SPDX-License-Identifier: MIT
  */
 
-#pragma once
+#include "flasher-device.h"
+#include "flasher-memory-map.h"
+#include "flasher-target.h"
 
-#include <glib-object.h>
-
-enum
+struct _FlasherTarget
 {
-  FLASHER_OBJECT_APPLICATION_ID = 1,
+  GObject parent_instance;
+
+  FlasherMemoryMap *memory_map;
+  FlasherDevice    *device;
 };
 
-G_BEGIN_DECLS
+G_DEFINE_FINAL_TYPE (FlasherTarget, flasher_target, G_TYPE_OBJECT)
 
-typedef struct _FlasherObjectPrivate FlasherObjectPrivate;
+static void
+flasher_target_class_init (FlasherTargetClass *klass)
+{
+}
 
-#define FLASHER_TYPE_OBJECT (flasher_object_get_type ())
+static void
+flasher_target_init (FlasherTarget *self)
+{
+}
 
-G_DECLARE_DERIVABLE_TYPE (FlasherObject, flasher_object, FLASHER, OBJECT, GObject)
-
-FlasherObject *flasher_object_new (void);
-void           flasher_object_get_mime_types (FlasherObject *self);
-
-G_END_DECLS
+FlasherTarget *
+flasher_target_new (void)
+{
+  return g_object_new (FLASHER_TYPE_TARGET, NULL);
+}
 

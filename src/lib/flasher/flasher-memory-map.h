@@ -27,21 +27,29 @@
 
 #include <glib-object.h>
 
-enum
-{
-  FLASHER_OBJECT_APPLICATION_ID = 1,
-};
-
 G_BEGIN_DECLS
 
-typedef struct _FlasherObjectPrivate FlasherObjectPrivate;
+typedef enum
+{
+  DATA_BYTES,
+  CONFIG_BITS
+} FlasherMemoryMapSectionType;
 
-#define FLASHER_TYPE_OBJECT (flasher_object_get_type ())
+typedef struct
+{
+  char                       *name;
+  guint                       size;
+  guint                       address;
+  FlasherMemoryMapSectionType type;
+} FlasherMemoryMapSection;
 
-G_DECLARE_DERIVABLE_TYPE (FlasherObject, flasher_object, FLASHER, OBJECT, GObject)
+#define FLASHER_TYPE_MEMORY_MAP (flasher_memory_map_get_type ())
 
-FlasherObject *flasher_object_new (void);
-void           flasher_object_get_mime_types (FlasherObject *self);
+G_DECLARE_FINAL_TYPE (FlasherMemoryMap, flasher_memory_map, FLASHER, MEMORY_MAP, GObject)
+
+FlasherMemoryMap *flasher_memory_map_new (void);
+void              flasher_memory_map_add_section (FlasherMemoryMap *self, FlasherMemoryMapSection *section);
+FlasherMemoryMapSection *flasher_memory_map_section_new (char *name, guint size, guint address, FlasherMemoryMapSectionType type);
 
 G_END_DECLS
 

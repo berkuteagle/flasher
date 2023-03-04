@@ -4,6 +4,8 @@ flasher_lib_sources = files(
   'flasher-file-extension.c',
   'flasher-plugins-engine.c',
   'flasher-extension.c',
+  'flasher-memory-map.c',
+  'flasher-target.c',
   'flasher-file.c',
   'flasher-device.c',
 )
@@ -12,6 +14,8 @@ flasher_lib_headers = files(
   'flasher-object.h',
   'flasher-device-extension.h',
   'flasher-file-extension.h',
+  'flasher-memory-map.h',
+  'flasher-target.h',
   'flasher-file.h',
   'flasher-device.h',
   'flasher-extension.h',

@@ -31,26 +31,27 @@
 
 struct _FlasherObjectPrivate
 {
-  GArray *mime_types;
-};
-
-struct _FlasherObject
-{
-  GObject               parent_instance;
+  GArray               *mime_types;
+  GSList               *devices;
   FlasherPluginsEngine *engine;
 };
 
-G_DEFINE_FINAL_TYPE_WITH_PRIVATE (FlasherObject, flasher_object, G_TYPE_OBJECT)
+struct _FlasherObjectClass
+{
+  GObjectClass parent_class;
+};
+
+G_DEFINE_TYPE_WITH_PRIVATE (FlasherObject, flasher_object, G_TYPE_OBJECT)
 
 static void
 flasher_object_init (FlasherObject *self)
 {
   FlasherObjectPrivate *priv;
 
-  self->engine = flasher_plugins_engine_get_default ();
-
   priv             = flasher_object_get_instance_private (self);
+  priv->engine     = flasher_plugins_engine_get_default ();
   priv->mime_types = NULL;
+  priv->devices    = NULL;
 
   flasher_object_get_mime_types (self);
 }
@@ -97,10 +98,19 @@ flasher_object_get_mime_types (FlasherObject *self)
       PeasExtensionSet *set;
       g_message ("Load extensions...");
 
-      set = peas_extension_set_new (PEAS_ENGINE (self->engine), FLASHER_TYPE_FILE_EXTENSION, "flasher", self, NULL);
+      set = peas_extension_set_new (PEAS_ENGINE (priv->engine), FLASHER_TYPE_FILE_EXTENSION, "flasher", self, NULL);
 
       peas_extension_set_foreach (set, (PeasExtensionSetForeachFunc) on_extension_check, priv->mime_types);
     }
 
   g_message ("Number of registered mime types: %d", priv->mime_types->len);
 }
+
+void
+flasher_object_register_devices (FlasherObject *self)
+{
+  FlasherObjectPrivate *priv;
+
+  priv = flasher_object_get_instance_private (self);
+}
+

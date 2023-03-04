@@ -27,21 +27,12 @@
 
 #include <glib-object.h>
 
-enum
-{
-  FLASHER_OBJECT_APPLICATION_ID = 1,
-};
-
 G_BEGIN_DECLS
 
-typedef struct _FlasherObjectPrivate FlasherObjectPrivate;
+#define FLASHER_TYPE_TARGET (flasher_target_get_type ())
 
-#define FLASHER_TYPE_OBJECT (flasher_object_get_type ())
+G_DECLARE_FINAL_TYPE (FlasherTarget, flasher_target, FLASHER, TARGET, GObject)
 
-G_DECLARE_DERIVABLE_TYPE (FlasherObject, flasher_object, FLASHER, OBJECT, GObject)
-
-FlasherObject *flasher_object_new (void);
-void           flasher_object_get_mime_types (FlasherObject *self);
+FlasherTarget *flasher_target_new (void);
 
 G_END_DECLS
-
