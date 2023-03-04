@@ -1,1 +1,1 @@
-# Open source tool flash MCUs
+# Open source tool for MCUs flashing
