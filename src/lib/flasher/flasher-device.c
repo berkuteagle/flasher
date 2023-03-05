@@ -47,3 +47,4 @@ flasher_device_new (void)
 {
   return g_object_new (FLASHER_TYPE_DEVICE, NULL);
 }
+

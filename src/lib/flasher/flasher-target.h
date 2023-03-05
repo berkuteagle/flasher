@@ -29,6 +29,12 @@
 
 G_BEGIN_DECLS
 
+typedef enum
+{
+  PREDEFINED,
+  CONFIGURABLE
+} FlasherTargetType;
+
 #define FLASHER_TYPE_TARGET (flasher_target_get_type ())
 
 G_DECLARE_FINAL_TYPE (FlasherTarget, flasher_target, FLASHER, TARGET, GObject)
@@ -36,3 +42,4 @@ G_DECLARE_FINAL_TYPE (FlasherTarget, flasher_target, FLASHER, TARGET, GObject)
 FlasherTarget *flasher_target_new (void);
 
 G_END_DECLS
+

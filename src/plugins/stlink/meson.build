@@ -1,9 +1,9 @@
-plugin_name = 'ihex'
+plugin_name = 'stlink'
 plugin_full_name = '@0@-@1@'.format(plugin_name, api_version)
 
 shared_library(
   plugin_full_name,
-  files('ihex.c'),
+  files('stlink.c'),
   include_directories: [include_directories('.'), flasher_lib_include],
   dependencies: [flasher_dep, libpeas_dep, glib_dep],
   link_with: flasher_lib,

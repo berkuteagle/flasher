@@ -96,3 +96,4 @@ flasher_plugins_engine_get_default (void)
 
   return default_engine;
 }
+

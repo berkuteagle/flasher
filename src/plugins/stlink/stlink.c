@@ -23,34 +23,33 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "flasher-ihex.h"
+#include "stlink.h"
 
 static void
-flasher_ihex_extension_iface_init (FlasherExtensionInterface *iface)
+flasher_stlink_extension_iface_init (FlasherExtensionInterface *iface)
 {
 }
 
 static void
-flasher_ihex_file_extension_iface_init (FlasherFileExtensionInterface *iface)
+flasher_stlink_device_extension_iface_init (FlasherDeviceExtensionInterface *iface)
 {
-  iface->load_file      = NULL;
-  iface->get_mime_types = flasher_ihex_file_extension_get_mime_types;
+  iface->activate = flasher_stlink_device_extension_activate;
 }
 
-G_DEFINE_FINAL_TYPE_WITH_CODE (FlasherIHex,
-                               flasher_ihex,
+G_DEFINE_FINAL_TYPE_WITH_CODE (FlasherSTLink,
+                               flasher_stlink,
                                PEAS_TYPE_EXTENSION_BASE,
-                               G_IMPLEMENT_INTERFACE (FLASHER_TYPE_EXTENSION, flasher_ihex_extension_iface_init)
-                                   G_IMPLEMENT_INTERFACE (FLASHER_TYPE_FILE_EXTENSION, flasher_ihex_file_extension_iface_init))
+                               G_IMPLEMENT_INTERFACE (FLASHER_TYPE_EXTENSION, flasher_stlink_extension_iface_init)
+                                   G_IMPLEMENT_INTERFACE (FLASHER_TYPE_DEVICE_EXTENSION, flasher_stlink_device_extension_iface_init))
 
 static void
-flasher_ihex_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
+flasher_stlink_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
 {
-  FlasherIHex *plugin;
+  FlasherSTLink *plugin;
 
-  g_return_if_fail (FLASHER_IS_IHEX (object));
+  g_return_if_fail (FLASHER_IS_STLINK (object));
 
-  plugin = FLASHER_IHEX (object);
+  plugin = FLASHER_STLINK (object);
 
   switch (prop_id)
     {
@@ -64,13 +63,13 @@ flasher_ihex_set_property (GObject *object, guint prop_id, const GValue *value, 
 }
 
 static void
-flasher_ihex_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
+flasher_stlink_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
-  FlasherIHex *plugin;
+  FlasherSTLink *plugin;
 
-  g_return_if_fail (FLASHER_IS_IHEX (object));
+  g_return_if_fail (FLASHER_IS_STLINK (object));
 
-  plugin = FLASHER_IHEX (object);
+  plugin = FLASHER_STLINK (object);
 
   switch (prop_id)
     {
@@ -84,44 +83,31 @@ flasher_ihex_get_property (GObject *object, guint prop_id, GValue *value, GParam
 }
 
 static void
-flasher_ihex_init (FlasherIHex *extension)
+flasher_stlink_init (FlasherSTLink *extension)
 {
-  g_message ("iHEX init");
 }
 
 static void
-flasher_ihex_class_init (FlasherIHexClass *klass)
+flasher_stlink_class_init (FlasherSTLinkClass *klass)
 {
   GObjectClass *object_class;
 
-  g_message ("iHEX class init");
-
   object_class               = G_OBJECT_CLASS (klass);
-  object_class->set_property = flasher_ihex_set_property;
-  object_class->get_property = flasher_ihex_get_property;
+  object_class->set_property = flasher_stlink_set_property;
+  object_class->get_property = flasher_stlink_get_property;
 
   g_object_class_override_property (object_class, PROP_FLASHER, "flasher");
 }
 
-GArray *
-flasher_ihex_file_extension_get_mime_types (FlasherFileExtension *extension)
+void
+flasher_stlink_device_extension_activate (FlasherDeviceExtension *extension)
 {
-  GArray *a = g_array_new (FALSE, FALSE, sizeof (char *));
-  g_array_append_val (a, "bin");
-
-  g_assert (FLASHER_IS_IHEX (extension));
-
-  if (FLASHER_IHEX (extension)->flasher != NULL)
-    g_message ("Flasher object property is defined");
-
-  return a;
+  g_assert (FLASHER_IS_STLINK (extension));
 }
 
 G_MODULE_EXPORT void
 peas_register_types (PeasObjectModule *module)
 {
-  g_message ("Register peas types: iHEX");
-
-  // flasher_plugin_ihex_register_type (G_TYPE_MODULE (module));
-  peas_object_module_register_extension_type (module, FLASHER_TYPE_FILE_EXTENSION, FLASHER_TYPE_IHEX);
+  peas_object_module_register_extension_type (module, FLASHER_TYPE_DEVICE_EXTENSION, FLASHER_TYPE_STLINK);
 }
+

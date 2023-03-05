@@ -1,0 +1,9 @@
+[Plugin]
+Module=stlink-1.0
+Builtin=true
+IAge=3
+Name=STLink Plugin
+Description=Allows screenshots and galleries to be taken of videos
+Authors=Anton Snigirev
+Copyright=Copyright © 2023 Anton Snigirev
+Website=https://wiki.gnome.org/

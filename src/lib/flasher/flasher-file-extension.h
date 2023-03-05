@@ -48,3 +48,4 @@ void    flasher_file_extension_load_file (FlasherFileExtension *extension);
 GArray *flasher_file_extension_get_mime_types (FlasherFileExtension *extension);
 
 G_END_DECLS
+

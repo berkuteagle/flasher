@@ -48,3 +48,4 @@ void flasher_device_extension_activate (FlasherDeviceExtension *extension);
 void flasher_device_extension_deactivate (FlasherDeviceExtension *extension);
 
 G_END_DECLS
+

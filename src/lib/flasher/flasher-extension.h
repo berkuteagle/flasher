@@ -37,6 +37,13 @@ G_DECLARE_INTERFACE (FlasherExtension, flasher_extension, FLASHER, EXTENSION, GO
 struct _FlasherExtensionInterface
 {
   GTypeInterface g_iface;
+
+  void (*activate) (FlasherExtension *extension);
+  void (*deactivate) (FlasherExtension *extension);
 };
 
+void flasher_extension_activate (FlasherExtension *extension);
+void flasher_extension_deactivate (FlasherExtension *extension);
+
 G_END_DECLS
+

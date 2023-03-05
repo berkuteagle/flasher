@@ -25,6 +25,7 @@
 
 #include <libpeas/peas.h>
 
+#include "flasher-device-extension.h"
 #include "flasher-file-extension.h"
 #include "flasher-object.h"
 #include "flasher-plugins-engine.h"
@@ -50,10 +51,10 @@ flasher_object_init (FlasherObject *self)
 
   priv             = flasher_object_get_instance_private (self);
   priv->engine     = flasher_plugins_engine_get_default ();
-  priv->mime_types = NULL;
+  priv->mime_types = g_array_new (FALSE, FALSE, sizeof (char *));
   priv->devices    = NULL;
 
-  flasher_object_get_mime_types (self);
+  flasher_object_register_file_types (self);
 }
 
 static void
@@ -68,7 +69,7 @@ flasher_object_new (void)
 }
 
 static void
-on_extension_check (PeasExtensionSet *set, PeasPluginInfo *info, FlasherFileExtension *exten, GArray *mime_types)
+on_file_extension_check (PeasExtensionSet *set, PeasPluginInfo *info, FlasherFileExtension *exten, GArray *mime_types)
 {
   GArray *types;
 
@@ -83,24 +84,26 @@ on_extension_check (PeasExtensionSet *set, PeasPluginInfo *info, FlasherFileExte
     }
 }
 
+static void
+on_device_extension_check (PeasExtensionSet *set, PeasPluginInfo *info, FlasherDeviceExtension *extension)
+{
+  g_message ("Check file extension: %s", peas_plugin_info_get_name (info));
+}
+
 void
-flasher_object_get_mime_types (FlasherObject *self)
+flasher_object_register_file_types (FlasherObject *self)
 {
   FlasherObjectPrivate *priv;
 
   priv = flasher_object_get_instance_private (self);
 
-  if (priv->mime_types == NULL)
-    priv->mime_types = g_array_new (FALSE, FALSE, sizeof (char *));
-
   if (priv->mime_types->len == 0)
     {
       PeasExtensionSet *set;
-      g_message ("Load extensions...");
 
       set = peas_extension_set_new (PEAS_ENGINE (priv->engine), FLASHER_TYPE_FILE_EXTENSION, "flasher", self, NULL);
 
-      peas_extension_set_foreach (set, (PeasExtensionSetForeachFunc) on_extension_check, priv->mime_types);
+      peas_extension_set_foreach (set, (PeasExtensionSetForeachFunc) on_file_extension_check, priv->mime_types);
     }
 
   g_message ("Number of registered mime types: %d", priv->mime_types->len);
@@ -112,5 +115,14 @@ flasher_object_register_devices (FlasherObject *self)
   FlasherObjectPrivate *priv;
 
   priv = flasher_object_get_instance_private (self);
+
+  if (priv->devices == NULL)
+    {
+      PeasExtensionSet *set;
+
+      set = peas_extension_set_new (PEAS_ENGINE (priv->engine), FLASHER_TYPE_DEVICE_EXTENSION, "flasher", self, NULL);
+
+      peas_extension_set_foreach (set, (PeasExtensionSetForeachFunc) on_device_extension_check, priv->devices);
+    }
 }
 

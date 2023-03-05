@@ -47,3 +47,4 @@ flasher_file_new (void)
 {
   return g_object_new (FLASHER_TYPE_FILE, NULL);
 }
+

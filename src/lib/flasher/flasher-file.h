@@ -37,3 +37,4 @@ G_DECLARE_FINAL_TYPE (FlasherFile, flasher_file, FLASHER, FILE, GObject)
 FlasherFile *flasher_file_new (void);
 
 G_END_DECLS
+

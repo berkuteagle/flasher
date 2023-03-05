@@ -34,3 +34,30 @@ flasher_extension_default_init (FlasherExtensionInterface *iface)
   g_object_interface_install_property (iface, g_param_spec_object ("flasher", "Flasher", "Flasher Object", FLASHER_TYPE_OBJECT,
                                                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
+
+void
+flasher_extension_activate (FlasherExtension *extension)
+{
+  FlasherExtensionInterface *iface;
+
+  g_return_if_fail (FLASHER_IS_EXTENSION (extension));
+
+  iface = FLASHER_EXTENSION_GET_IFACE (extension);
+
+  if (iface->activate != NULL)
+    iface->activate (extension);
+}
+
+void
+flasher_extension_deactivate (FlasherExtension *extension)
+{
+  FlasherExtensionInterface *iface;
+
+  g_return_if_fail (FLASHER_IS_EXTENSION (extension));
+
+  iface = FLASHER_EXTENSION_GET_IFACE (extension);
+
+  if (iface->deactivate != NULL)
+    iface->deactivate (extension);
+}
+

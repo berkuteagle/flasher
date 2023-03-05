@@ -59,3 +59,4 @@ flasher_file_extension_get_mime_types (FlasherFileExtension *extension)
 
   return iface->get_mime_types (extension);
 }
+

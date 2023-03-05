@@ -23,38 +23,33 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "flasher-device-extension.h"
+#pragma once
 
-G_DEFINE_INTERFACE (FlasherDeviceExtension, flasher_device_extension, FLASHER_TYPE_EXTENSION)
+#include <flasher/flasher-device-extension.h>
+#include <libpeas/peas.h>
 
-static void
-flasher_device_extension_default_init (FlasherDeviceExtensionInterface *iface)
+G_BEGIN_DECLS
+
+#define FLASHER_TYPE_STLINK (flasher_stlink_get_type ())
+
+G_DECLARE_FINAL_TYPE (FlasherSTLink, flasher_stlink, FLASHER, STLINK, PeasExtensionBase)
+
+struct _FlasherSTLink
 {
-}
+  PeasExtensionBase parent_instance;
 
-void
-flasher_device_extension_activate (FlasherDeviceExtension *extension)
+  FlasherObject *flasher;
+};
+
+enum
 {
-  FlasherDeviceExtensionInterface *iface;
+  PROP_FLASHER = 1,
+  N_PROPERTIES
+};
 
-  g_return_if_fail (FLASHER_IS_DEVICE_EXTENSION (extension));
+void flasher_stlink_device_extension_activate (FlasherDeviceExtension *extension);
 
-  iface = FLASHER_DEVICE_EXTENSION_GET_IFACE (extension);
+G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);
 
-  if (iface->activate != NULL)
-    iface->activate (extension);
-}
-
-void
-flasher_device_extension_deactivate (FlasherDeviceExtension *extension)
-{
-  FlasherDeviceExtensionInterface *iface;
-
-  g_return_if_fail (FLASHER_IS_DEVICE_EXTENSION (extension));
-
-  iface = FLASHER_DEVICE_EXTENSION_GET_IFACE (extension);
-
-  if (iface->deactivate != NULL)
-    iface->deactivate (extension);
-}
+G_END_DECLS
 

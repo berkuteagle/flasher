@@ -37,3 +37,4 @@ G_DECLARE_FINAL_TYPE (FlasherDevice, flasher_device, FLASHER, DEVICE, GObject)
 FlasherDevice *flasher_device_new (void);
 
 G_END_DECLS
+

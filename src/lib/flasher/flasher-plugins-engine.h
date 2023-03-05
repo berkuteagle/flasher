@@ -37,3 +37,4 @@ FlasherPluginsEngine *flasher_plugins_engine_get_default (void);
 void                  flasher_plugins_engine_shut_down (FlasherPluginsEngine *self);
 
 G_END_DECLS
+

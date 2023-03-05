@@ -41,7 +41,8 @@ typedef struct _FlasherObjectPrivate FlasherObjectPrivate;
 G_DECLARE_DERIVABLE_TYPE (FlasherObject, flasher_object, FLASHER, OBJECT, GObject)
 
 FlasherObject *flasher_object_new (void);
-void           flasher_object_get_mime_types (FlasherObject *self);
+void           flasher_object_register_file_types (FlasherObject *self);
+void           flasher_object_register_devices (FlasherObject *self);
 
 G_END_DECLS
 
