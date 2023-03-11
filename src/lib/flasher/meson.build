@@ -24,6 +24,7 @@ flasher_lib_headers = files(
 flasher_lib_dependencies = [
   glib_dep,
   libpeas_dep,
+  libusb_dep,
   dependency('gobject-introspection-1.0')
 ]
 

@@ -54,6 +54,25 @@
             ]
         },
         {
+            "name": "libusb",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [
+                "/lib/*.la",
+                "/lib/pkgconfig",
+                "/include"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/libusb/libusb.git",
+                    "tag": "v1.0.26"
+                }
+            ],
+            "post-install": [
+                "install -Dm644 COPYING ${FLATPAK_DEST}/share/licenses/libusb/COPYING"
+            ]
+        },
+        {
             "name": "flasher",
             "builddir": true,
             "buildsystem": "meson",

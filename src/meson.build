@@ -2,6 +2,7 @@ api_version = '1.0'
 
 libpeas_dep = dependency('libpeas-1.0')
 glib_dep = dependency('glib-2.0')
+libusb_dep = dependency('libusb-1.0')
 
 subdir('lib')
 
